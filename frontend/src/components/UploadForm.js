@@ -1,25 +1,48 @@
 import React, { useState } from "react";
-import { uploadImage } from "../services/api";
 
 const UploadForm = ({ onUpload }) => {
-  const [url, setUrl] = useState("");
+  const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newImage = await uploadImage({ url, title });
-    onUpload(newImage);
-    setUrl("");
-    setTitle("");
+
+    if (!file) {
+      alert("Please select a file");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", file); // must match upload.single("image") in backend
+    formData.append("title", title);
+
+    try {
+      const res = await fetch("http://localhost:5000/api/images/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        throw new Error("Upload failed");
+      }
+
+      const newImage = await res.json();
+      onUpload(newImage);
+
+      // reset form
+      setFile(null);
+      setTitle("");
+    } catch (err) {
+      console.error(err);
+      alert("Error uploading image");
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="upload-form">
       <input
-        type="text"
-        placeholder="Image URL"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
+        type="file"
+        onChange={(e) => setFile(e.target.files[0])}
         required
       />
       <input
