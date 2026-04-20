@@ -60,16 +60,12 @@ h1 {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   text-align: center;
-  transition: transform 0.2s ease;
-}
-
-.gallery-item:hover {
-  transform: translateY(-5px);
 }
 
 .gallery-item img {
   width: 100%;
-  height: auto;
+  height: 250px; /* fixed height for consistency */
+  object-fit: cover; /* crop to fill the box without distortion */
   display: block;
 }
 
@@ -77,4 +73,7 @@ h1 {
   margin: 10px;
   font-weight: 500;
   color: #555;
+}
+.gallery-item:hover {
+  transform: translateY(-5px);
 }
