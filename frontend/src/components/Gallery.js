@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UploadForm from "../components/UploadForm";
+import "./Gallery.css";
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
