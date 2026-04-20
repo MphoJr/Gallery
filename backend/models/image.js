@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database"); // your db connection
 
-const Image = sequelize.define("Image", {
+const Image = sequelize.define("image", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
