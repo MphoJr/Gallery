@@ -4,7 +4,8 @@ const imageRoutes = require("./routes/images");
 const sequelize = require("./config/database");
 const Image = require("./models/image");
 const app = express();
-
+const path = require("path");
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 sequelize
   .sync()
   .then(() => console.log("Database synced"))
